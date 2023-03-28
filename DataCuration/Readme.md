@@ -26,6 +26,7 @@ python nodes_dict.py
 Get all SMILES files from AZ-DREAM synergy data
 
 1. Tanimoto Similarity Search (TSS)
+codes mention below can be either copied into a script or run on terminal
 ```
 import pandas as pd
 import os, sys
@@ -34,7 +35,6 @@ for cid in cids:
   os.system("openbabel-2.3.1/bin/babel "+cid+" stitch.smi -ofpt > "+cid+".out")
  ```
  2. Converting TSS outputs to CSV
-
 ```
 out_list = [l for l in os.listdir() if "CIDs" in l]
 for out in out_list:
@@ -55,18 +55,13 @@ for out in out_list:
 
 Replace "filename" with the CSV input file
 
-```
-python dacs.py
-```
+`python dacs.py`
 
 ## Step 5: Concat all dacs data into one file
 Get header from the first dacs file and save it in a `header.txt`
 
 ```
-for f in dacs_*
-do
-sed -i 1d $f;
-done;
+for f in dacs_*; do sed -i 1d $f; done;
 ```
 Concat all the dacs files into a larger file
 
