@@ -7,16 +7,22 @@
 * openbabel *(v2.3.1, https://sourceforge.net/projects/openbabel/)*
 
 ## Step 1: Convert ENSP-ID in the chemical-protein links file to UniProt
+<p>
+Chemical-Protein Links file represents interaction of drugs with proteins. The score in the file represents how well a drug interacts with proteins.<br>
+idmapping.dat file contains ID conversions between UniProt ID and other ID types<br>
+protein_chemical.py uses idmapping.dat file to convert ENSEMBL ID to UniProt ID </br></br>
+</p>
 
 * Download chemical-protein links (9606.protein_chemical.links.v5.0.1.tsv) file from STITCH dataset from http://stitch.embl.de
 * seprate **STRING** and **Ensembl_PRO** from the total datasets
-
+* ID mapping file (idmapping.dat) can be downloaded from https://ftp.uniprot.org/pub/databases/uniprot
 ```
-grep STRING 9606.protein_chemical.links.v5.0.1.tsv > string.data
-grep Ensembl_PRO 9606.protein_chemical.links.v5.0.1.tsv > ensp.data
+grep STRING idmapping.dat > string.data
+grep Ensembl_PRO idmapping.dat > ensp.data
 cat string.data ensp.data > idmapping.data
 python protein_chemical.py
 ```
+
 ## Step 2: Extract all the targets for CIDs in chemical-protein links if target in IHP-PING
 This step requires users to have IHP-PING PPI in a csv file downloaded in the same folder as the `make_nodes_dict.py`
 ```
