@@ -10,7 +10,7 @@
 <p>
 Chemical-Protein Links file represents interaction of drugs with proteins. The score in the file represents how well a drug interacts with proteins.<br>
 idmapping.dat file contains ID conversions between UniProt ID and other ID types<br>
-protein_chemical.py uses idmapping.dat file to convert ENSEMBL ID to UniProt ID </br></br>
+convert_to_uniprot.py uses idmapping.dat file to convert ENSEMBL ID to UniProt ID </br></br>
 </p>
 
 * Download chemical-protein links (9606.protein_chemical.links.v5.0.1.tsv) file from STITCH dataset from http://stitch.embl.de
@@ -20,19 +20,19 @@ protein_chemical.py uses idmapping.dat file to convert ENSEMBL ID to UniProt ID 
 grep STRING idmapping.dat > string.data
 grep Ensembl_PRO idmapping.dat > ensp.data
 cat string.data ensp.data > idmapping.data
-python protein_chemical.py
+python convert_to_uniprot.py
 ```
 
 ## Step 2: Extract all the targets for CIDs in chemical-protein links if target in IHP-PING
-This step requires users to have IHP-PING PPI in a csv file downloaded in the same folder as the `make_nodes_dict.py`
-```
-python nodes_dict.py
-```
+This step requires users to have IHP-PING PPI in a csv file downloaded in the same folder as the `make_nodes_dict.py`<br>
+`python make_nodes_dict.py`
+
 ## Step 3: Similarity search of CIDs from AZ-DREAM challenge against STITCH
 Get all SMILES files from AZ-DREAM synergy data
 
 1. Tanimoto Similarity Search (TSS)
-codes mention below can be either copied into a script or run on terminal
+codes mention below can be either copied into a python script or run on terminal
+The script below uses `SMILES` from stitch.smi
 ```
 import pandas as pd
 import os, sys
@@ -41,6 +41,7 @@ for cid in cids:
   os.system("openbabel-2.3.1/bin/babel "+cid+" stitch.smi -ofpt > "+cid+".out")
  ```
  2. Converting TSS outputs to CSV
+
 ```
 out_list = [l for l in os.listdir() if "CIDs" in l]
 for out in out_list:
